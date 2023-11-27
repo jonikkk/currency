@@ -1,5 +1,5 @@
 from django.http import HttpResponse
-from django.shortcuts import render
+
 
 from currency.models import Rate, ContactUs
 
@@ -16,7 +16,7 @@ def rate_list(request):
             f"Buy: {rate.buy}, "
             f"Sell: {rate.sell}, "
             f"Created: {rate.created}, "
-            f"Type: {rate.type}, "
+            f"Type: {rate.currency_type}, "
             f"Source: {rate.source} <br>")
 
     return HttpResponse(str(result))
@@ -27,7 +27,7 @@ def contactus(request):
     contacts = ContactUs.objects.all()
     for contact in contacts:
         result.append(
-            f" ID: {contact.id}, "
+            f" ID: {contact.contact_id}, "
             f"Email: {contact.email_from}, "
             f"Subject: {contact.subject}, "
             f"Message: {contact.message} <br>")
