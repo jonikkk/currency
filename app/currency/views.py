@@ -8,7 +8,6 @@ from currency.models import Rate, ContactUs
 
 def rate_list(request):
     rates = Rate.objects.all()
-
     context = {
         'rates': rates
     }
@@ -22,5 +21,3 @@ def contactus(request):
     }
 
     return render(request, 'contactUs.html', context=context)
-
-
