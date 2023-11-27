@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+
+        {% for contacts in contacts %}
+        {{contacts.contact_id}}
+
+        {{contacts.email_from}}<br>
+        {% endfor %}
+
+{% endblock %}
