@@ -5,12 +5,15 @@
 {% block content %}
     <h1>Source list</h1>
 
-        {% for source in sources %}
-            <a>{{ source.source_name }}   {{ source.source_url }} </a>
-            <a href="/source/update/{{ source.source_id }}/">Edit</a>
-            <a href="/source/delete/{{ source.source_id }}/">Delete</a>
-            <a href="/source/details/{{ source.source_id }}/">Details</a>
+    <button><a href="{% url 'currency:source-create' %}">Create Source</a></button>
+    <br>
+    <br>
 
+        {% for source in object_list %}
+            <a>{{ source.source_name }}   {{ source.source_url }} </a>
+            <a href="{% url 'currency:source-update' source.source_id %}">Edit</a>
+            <a href="{% url 'currency:source-delete' source.source_id %}">Delete</a>
+            <a href="{% url 'currency:source-details' source.source_id %}">Details</a>
             <br>
         {% endfor %}
 

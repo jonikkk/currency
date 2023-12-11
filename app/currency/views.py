@@ -1,85 +1,97 @@
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+from django.urls import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView
 
-from currency.forms import SourceForm
+from currency.forms import SourceForm, RateForm, ContactUsForm
 from currency.models import Rate, ContactUs, Source
 
 
 # Create your views here.
 
 
-def rate_list(request):
-    rates = Rate.objects.all()
-    context = {
-        'rates': rates
-    }
-    return render(request, 'Rates.html', context=context)
+class IndexView(TemplateView):
+    template_name = 'index.html'
 
 
-def contactus(request):
-    contacts = ContactUs.objects.all()
-    context = {
-        'contacts': contacts
-    }
-
-    return render(request, 'contactUs.html', context=context)
+class RateListView(ListView):
+    queryset = Rate.objects.all()
+    template_name = 'rate_list.html'
 
 
-def source_create(request):
-    if request.method == 'POST':
-        form = SourceForm(data=request.POST)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/source/list/')
-
-    else:
-        form = SourceForm()
-
-    context = {
-        'form': form
-    }
-    return render(request, 'source_create.html', context=context)
+class RateCreateView(CreateView):
+    form_class = RateForm
+    template_name = 'rate_create.html'
+    success_url = reverse_lazy('currency:rate-list')
 
 
-def source_update(request, pk):
-    source = Source.objects.get(source_id=pk)
-    if request.method == 'POST':
-        form = SourceForm(data=request.POST, instance=source)
-        if form.is_valid():
-            form.save()
-            return HttpResponseRedirect('/source/list/')
-
-    else:
-        form = SourceForm(instance=source)
-
-    context = {
-        'form': form
-    }
-    return render(request, 'source_update.html', context=context)
+class RateUpdateView(UpdateView):
+    model = Rate
+    form_class = RateForm
+    template_name = 'rate_update.html'
+    success_url = reverse_lazy('currency:rate-list')
 
 
-def source_delete(request, pk):
-    source = Source.objects.get(source_id=pk)
-    if request.method == 'POST':
-        source.delete()
-        return HttpResponseRedirect('/source/list/')
-    context = {
-        'source': source
-    }
-    return render(request, 'source_delete.html', context=context)
+class RateDeleteView(DeleteView):
+    model = Rate
+    template_name = 'rate_delete.html'
+    success_url = reverse_lazy('currency:rate-list')
 
 
-def source_details(request, pk):
-    source = Source.objects.get(source_id=pk)
-    context = {
-        'source': source
-    }
-    return render(request, 'source_details.html', context=context)
+class ContactUsListView(ListView):
+    queryset = ContactUs.objects.all()
+    template_name = 'contactUs.html'
 
 
-def source_list(request):
-    sources = Source.objects.all()
-    context = {
-        'sources': sources
-    }
-    return render(request, 'source_list.html', context=context)
+class ContactUsCreateView(CreateView):
+    form_class = ContactUsForm
+    template_name = 'contactus_create.html'
+    success_url = reverse_lazy('currency:contactus-list')
+
+
+class ContactUsUpdateView(UpdateView):
+    model = ContactUs
+    form_class = ContactUsForm
+    template_name = 'contactus_update.html'
+    success_url = reverse_lazy('currency:contactus-list')
+
+
+class ContactUsDeleteView(DeleteView):
+    model = ContactUs
+    template_name = 'contactus_delete.html'
+    success_url = reverse_lazy('currency:contactus-list')
+
+
+class ContactUsDetailsView(DetailView):
+    model = ContactUs
+    template_name = 'contactus_details.html'
+    success_url = reverse_lazy('currency:contactus-list')
+
+
+class SourceCreateView(CreateView):
+    model = Source
+    form_class = SourceForm
+    template_name = 'source_create.html'
+    success_url = reverse_lazy('currency:source-list')
+
+
+class SourceUpdateView(UpdateView):
+    model = Source
+    form_class = SourceForm
+    template_name = 'source_update.html'
+    success_url = reverse_lazy('currency:source-list')
+
+
+class SourceDeleteView(DeleteView):
+    model = Source
+    template_name = 'source_delete.html'
+    success_url = reverse_lazy('currency:source-list')
+
+
+class SourceDetailsView(DetailView):
+    model = Source
+    template_name = 'source_details.html'
+    success_url = reverse_lazy('currency:source-list')
+
+
+class SourceListView(ListView):
+    queryset = Source.objects.all()
+    template_name = 'source_list.html'

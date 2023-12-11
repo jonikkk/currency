@@ -18,5 +18,5 @@ class ContactUs(models.Model):
 
 class Source(models.Model):
     source_id = models.AutoField(primary_key=True)
-    source_url = models.CharField(max_length=255)
-    source_name = models.CharField(max_length=64)
+    source_url = models.CharField(max_length=255, blank=False)
+    source_name = models.CharField(max_length=64, blank=False)
