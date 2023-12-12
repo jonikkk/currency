@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+
+{% block title %}Contact Us Details{% endblock title %}
+
+{% block content %}
+    <h1>Contact Us Details</h1>
+    <form>
+
+        <li><a>Source mail: {{ contactus.email_from }}</a></li>
+        <li><a>Subject:     {{ contactus.subject }}</a></li>
+        <br>
+        <a>Message: {{ contactus.message }}</a>
+
+
+
+    </form>
+
+
+{% endblock content %}
+```
