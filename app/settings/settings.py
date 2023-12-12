@@ -41,7 +41,7 @@ DGANGO_APPS = [
 
 ]
 EXTERNAL_APPS = [
-    # 'django_extensions',
+    'django_extensions',
 ]
 
 INTERNAL_APPS = [

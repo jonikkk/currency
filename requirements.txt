@@ -1,6 +1,8 @@
 # requirements for My Django Project
-Faker==20.1.0
+
+ipython
 Django==4.2.7
+django-extensions
 flake8==6.1.0
 flake8-builtins==2.2.0
 flake8-print==5.0.0
