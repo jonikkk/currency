@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth import get_user_model
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.urls import reverse_lazy
@@ -130,18 +129,3 @@ class SourceDetailsView(DetailView):
 class SourceListView(ListView):
     queryset = Source.objects.all()
     template_name = 'source_list.html'
-
-
-class ProfileView(LoginRequiredMixin, UpdateView):
-    model = get_user_model()
-    template_name = 'profile.html'
-    success_url = reverse_lazy('index')
-    fields = (
-        'first_name',
-        'last_name',
-        'email',
-    )
-
-    def get_object(self, queryset=None):
-        qs = self.get_queryset()
-        return qs.get(id=self.request.user.id)

@@ -8,10 +8,11 @@
     <button><a href="{% url 'currency:source-list' %}">Source list</a></button>
     {% if request.user.is_authenticated %}
         Hello {{ request.user.email }}!
-        <button><a href="{% url 'profile'%}">Profile</a></button>
+        <button><a href="{% url 'account:profile'%}">Profile</a></button>
         <button><a href="{% url 'logout' %}">Logout</a></button>
     {% else %}
         <button><a href="{% url 'login' %}">Login</a></button>
+        <button><a href="{% url 'account:signup' %}">Signup</a></button>
     {% endif %}
 
 
