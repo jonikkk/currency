@@ -38,3 +38,13 @@ class Source(models.Model):
     class Meta:
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
+
+
+class RequestResponseTimeMiddlewareModel(models.Model):
+    path = models.CharField(max_length=255)
+    request_method = models.CharField(max_length=20)
+    execute_time = models.DecimalField(max_digits=5, decimal_places=4)
+
+    class Meta:
+        verbose_name = _('Log')
+        verbose_name_plural = _('Logs')

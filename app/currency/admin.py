@@ -1,5 +1,5 @@
 from django.contrib import admin
-from currency.models import Source, ContactUs
+from currency.models import Source, ContactUs, RequestResponseTimeMiddlewareModel
 
 
 @admin.register(ContactUs)
@@ -23,3 +23,10 @@ class SourceAdmin(admin.ModelAdmin):
     list_display = ('source_id', 'source_url', 'source_name')
     list_filter = ('source_name',)
     search_fields = ('source_name',)
+
+
+@admin.register(RequestResponseTimeMiddlewareModel)
+class LogsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'path', 'request_method', 'execute_time')
+    list_filter = ('request_method',)
+    search_fields = ('path',)
