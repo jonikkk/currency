@@ -6,6 +6,13 @@
     <button> <a href="{% url 'currency:contactus-list' %}">Contact us list</a></button>
     <button><a href="{% url 'currency:contactus-create' %}">Contact Us</a></button>
     <button><a href="{% url 'currency:source-list' %}">Source list</a></button>
+    {% if request.user.is_authenticated %}
+        Hello {{ request.user.email }}!
+        <button><a href="{% url 'profile'%}">Profile</a></button>
+        <button><a href="{% url 'logout' %}">Logout</a></button>
+    {% else %}
+        <button><a href="{% url 'login' %}">Login</a></button>
+    {% endif %}
 
 
 

@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+
+{% block title %}Rate delails{% endblock title %}
+
+{% block content %}
+    <h1>Rate Details:</h1>
+    <form>
+
+        <li><a>Rate Type: {{ rate.currency_type }}</a></li>
+        <br>
+        <a>Source: {{ rate.source }} </a>
+            <br>
+        <a>Buy: {{ rate.buy }} </a>
+            <br>
+        <a>Sell: {{ rate.sell }} </a>
+            <br>
+        <a>Created: {{ rate.created }} </a>
+
+
+
+    </form>
+
+
+{% endblock content %}
+```
