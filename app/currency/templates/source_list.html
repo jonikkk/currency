@@ -11,9 +11,9 @@
 
         {% for source in object_list %}
             <a>{{ source.source_name }}   {{ source.source_url }} </a>
-            <a href="{% url 'currency:source-update' source.source_id %}">Edit</a>
-            <a href="{% url 'currency:source-delete' source.source_id %}">Delete</a>
-            <a href="{% url 'currency:source-details' source.source_id %}">Details</a>
+            <a href="{% url 'currency:source-update' source.id %}">Edit</a>
+            <a href="{% url 'currency:source-delete' source.id %}">Delete</a>
+            <a href="{% url 'currency:source-details' source.id %}">Details</a>
             <br>
         {% endfor %}
 
