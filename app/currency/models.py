@@ -12,7 +12,7 @@ class Rate(models.Model):
         choices=CurrencyTypeChoices.choices,
         default=CurrencyTypeChoices.USD
     )
-    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE)
+    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE, related_name='rates')
 
     class Meta:
         verbose_name = _('Rate')
