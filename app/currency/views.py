@@ -1,5 +1,6 @@
-
 from django.conf import settings
+from django.contrib.auth import get_user_model
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView
@@ -27,16 +28,28 @@ class RateCreateView(CreateView):
     success_url = reverse_lazy('currency:rate-list')
 
 
-class RateUpdateView(UpdateView):
+class RateUpdateView(UserPassesTestMixin, UpdateView):
     model = Rate
     form_class = RateForm
     template_name = 'rate_update.html'
     success_url = reverse_lazy('currency:rate-list')
 
+    def test_func(self):
+        return self.request.user.is_superuser
 
-class RateDeleteView(DeleteView):
+
+class RateDeleteView(UserPassesTestMixin, DeleteView):
     model = Rate
     template_name = 'rate_delete.html'
+    success_url = reverse_lazy('currency:rate-list')
+
+    def test_func(self):
+        return self.request.user.is_superuser
+
+
+class RateDetailsView(LoginRequiredMixin, DetailView):
+    model = Rate
+    template_name = 'rate_details.html'
     success_url = reverse_lazy('currency:rate-list')
 
 
@@ -117,3 +130,18 @@ class SourceDetailsView(DetailView):
 class SourceListView(ListView):
     queryset = Source.objects.all()
     template_name = 'source_list.html'
+
+
+class ProfileView(LoginRequiredMixin, UpdateView):
+    model = get_user_model()
+    template_name = 'profile.html'
+    success_url = reverse_lazy('index')
+    fields = (
+        'first_name',
+        'last_name',
+        'email',
+    )
+
+    def get_object(self, queryset=None):
+        qs = self.get_queryset()
+        return qs.get(id=self.request.user.id)
