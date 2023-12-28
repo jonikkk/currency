@@ -19,6 +19,9 @@ from currency.views import (
     SourceListView,
     SourceDetailsView,
 
+
+
+
 )
 
 app_name = "currency"
@@ -39,5 +42,7 @@ urlpatterns = [
     path("source/delete/<int:pk>/", SourceDeleteView.as_view(), name='source-delete'),
     path("source/details/<int:pk>/", SourceDetailsView.as_view(), name='source-details'),
     path("source/list/", SourceListView.as_view(), name='source-list'),
+
+
 
 ]
