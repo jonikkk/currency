@@ -49,6 +49,7 @@ EXTERNAL_APPS = [
 
 INTERNAL_APPS = [
     'currency',
+    'account',
 ]
 
 INSTALLED_APPS = DJANGO_APPS + EXTERNAL_APPS + INTERNAL_APPS
@@ -115,6 +116,9 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+
+AUTH_USER_MODEL = 'account.User'
+
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
 
@@ -148,3 +152,7 @@ EMAIL_HOST_USER = 'hileltest1234@gmail.com'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
+
+
+HTTP_METHOD = 'http'
+DOMAIN = '0.0.0.0:8001'
