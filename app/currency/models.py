@@ -1,6 +1,11 @@
 from django.db import models
 from currency.choices import CurrencyTypeChoices
 from django.utils.translation import gettext_lazy as _
+from django.templatetags.static import static
+
+
+def source_directory_path(instance, filename):
+    return f'logo/source_{instance.source_name}/{filename}'
 
 
 class Rate(models.Model):
@@ -31,9 +36,9 @@ class ContactUs(models.Model):
 
 
 class Source(models.Model):
-
     source_url = models.CharField(_('Source URL'), max_length=255, blank=False)
     source_name = models.CharField(_('Source name'), max_length=64, blank=False)
+    logo = models.FileField(_('Logo'), default=None, null=True, blank=True, upload_to=source_directory_path)
 
     class Meta:
         verbose_name = _('Source')
@@ -41,6 +46,13 @@ class Source(models.Model):
 
     def __str__(self):
         return self.source_name
+
+    @property
+    def logo_url(self) -> str:
+        if self.logo:
+            return self.logo.url
+
+        return static('bank.png')
 
 
 class RequestResponseTimeMiddlewareModel(models.Model):

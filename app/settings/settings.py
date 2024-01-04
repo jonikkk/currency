@@ -45,6 +45,7 @@ DJANGO_APPS = [
 ]
 EXTERNAL_APPS = [
     'django_extensions',
+    'crispy_forms',
 ]
 
 INTERNAL_APPS = [
@@ -67,6 +68,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "settings.urls"
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {
@@ -116,7 +118,6 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-
 AUTH_USER_MODEL = 'account.User'
 
 # Internationalization
@@ -134,6 +135,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 STATIC_URL = "static/"
+STATICFILES_DIRS = [
+    BASE_DIR / "static",
+]
+
+MEDIA_URL = "media/"
+MEDIA_ROOT = BASE_DIR / "media"
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
@@ -152,7 +159,6 @@ EMAIL_HOST_USER = 'hileltest1234@gmail.com'
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
-
 
 HTTP_METHOD = 'http'
 DOMAIN = '0.0.0.0:8001'

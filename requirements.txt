@@ -6,3 +6,5 @@ django-extensions
 flake8==6.1.0
 flake8-builtins==2.2.0
 flake8-print==5.0.0
+django-crispy-forms==1.14.0
+bootstrap4
