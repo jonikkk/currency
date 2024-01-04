@@ -1,10 +1,12 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block title %}Profile{% endblock %}
 {% block content %}
     <h1>Profile</h1>
 
-    <form method = "post">
+        <img style="height: 100px; width: 100px" src="{{ user.avatar_url }}" alt="avatar" >
+    <form method = "post" enctype="multipart/form-data">
         {{ form.as_p }}
         {% csrf_token %}
         <button type = "submit">Update</button>

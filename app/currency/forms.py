@@ -6,7 +6,7 @@ from currency.models import Source, Rate, ContactUs
 class SourceForm(forms.ModelForm):
     class Meta:
         model = Source
-        fields = ('source_url', 'source_name')
+        fields = ('source_url', 'source_name', 'logo')
 
 
 class RateForm(forms.ModelForm):
