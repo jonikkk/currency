@@ -45,6 +45,7 @@ DJANGO_APPS = [
 ]
 EXTERNAL_APPS = [
     'django_extensions',
+    'crispy_forms',
 ]
 
 INTERNAL_APPS = [
@@ -67,6 +68,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = "settings.urls"
 
+CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 TEMPLATES = [
     {
@@ -140,6 +142,8 @@ STATICFILES_DIRS = [
 
 MEDIA_URL = "media/"
 MEDIA_ROOT = BASE_DIR / "media"
+
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
