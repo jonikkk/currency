@@ -20,7 +20,7 @@ class ContactUsAdmin(admin.ModelAdmin):
 
 @admin.register(Source)
 class SourceAdmin(admin.ModelAdmin):
-    list_display = ('source_id', 'source_url', 'source_name')
+    list_display = ('id', 'source_url', 'source_name')
     list_filter = ('source_name',)
     search_fields = ('source_name',)
 

@@ -12,7 +12,7 @@ class Rate(models.Model):
         choices=CurrencyTypeChoices.choices,
         default=CurrencyTypeChoices.USD
     )
-    source = models.CharField(_('Source'), max_length=255)
+    source = models.ForeignKey('currency.Source', on_delete=models.CASCADE, related_name='rates')
 
     class Meta:
         verbose_name = _('Rate')
@@ -31,13 +31,16 @@ class ContactUs(models.Model):
 
 
 class Source(models.Model):
-    source_id = models.AutoField(primary_key=True)
+
     source_url = models.CharField(_('Source URL'), max_length=255, blank=False)
     source_name = models.CharField(_('Source name'), max_length=64, blank=False)
 
     class Meta:
         verbose_name = _('Source')
         verbose_name_plural = _('Sources')
+
+    def __str__(self):
+        return self.source_name
 
 
 class RequestResponseTimeMiddlewareModel(models.Model):
