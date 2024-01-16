@@ -1,4 +1,4 @@
-from django.conf import settings
+
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.urls import reverse_lazy
@@ -6,7 +6,9 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView, T
 
 from currency.forms import SourceForm, RateForm, ContactUsForm
 from currency.models import Rate, ContactUs, Source
-from django.core.mail import send_mail
+
+
+from currency.tasks import send_email_in_background
 
 
 # Create your views here.
@@ -63,16 +65,17 @@ class ContactUsCreateView(CreateView):
     success_url = reverse_lazy('currency:contactus-list')
 
     def _send_email(self):
-        recipient = settings.EMAIL_HOST_USER
         subject = self.object.subject
         message = self.object.message
         email_from = self.object.email_from
-        send_mail(
-            subject,
-            message,
-            email_from,
-            [recipient],
-            fail_silently=False,
+
+        send_email_in_background.apply_async(
+            kwargs={
+             "subject": subject,
+             "message": message,
+             "email_from": email_from
+             },
+            countdown=10,
         )
 
     def form_valid(self, form):
