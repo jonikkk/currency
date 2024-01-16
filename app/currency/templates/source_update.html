@@ -1,13 +1,13 @@
 {% extends "base.html" %}
 
 {% block title %}Update source{% endblock title %}
-
+{% load crispy_forms_tags %}
 {% block content %}
     <h1>Update source</h1>
-    <form method="post">
+    <form method="post" enctype="multipart/form-data">
 
         {% csrf_token %}
-        {{ form.as_p }}
+       {{ form|crispy }}
         <button type="submit">Submit</button>
 
     </form>
