@@ -3,20 +3,29 @@
 {% block title %} Source list {% endblock title %}
 
 {% block content %}
+    <div class="row">
+
+        {% include 'includes/filter.html' %}
+
+    </div>
     <h1>Source list</h1>
 
     <button><a href="{% url 'currency:source-create' %}">Create Source</a></button>
     <br>
     <br>
 
-        {% for source in object_list %}
-            <a>{{ source.source_name }}</a>
-            <a href="{% url 'currency:source-update' source.id %}">Edit</a>
-            <a href="{% url 'currency:source-delete' source.id %}">Delete</a>
-            <a href="{% url 'currency:source-details' source.id %}">Details</a>
-            <br>
-        {% endfor %}
-
+    {% for source in object_list %}
+        <a>{{ source.source_name }}</a>
+        <a href="{% url 'currency:source-update' source.id %}">Edit</a>
+        <a href="{% url 'currency:source-delete' source.id %}">Delete</a>
+        <a href="{% url 'currency:source-details' source.id %}">Details</a>
+        <br>
+    {% endfor %}
+    <div class="row">
+        <div class="col-12">
+            {% include 'includes/pagination.html' %}
+        </div>
+    </div>
 
 {% endblock content %}
 ```

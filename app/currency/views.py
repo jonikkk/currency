@@ -1,12 +1,12 @@
-
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, TemplateView, DetailView
+from django.views.generic import CreateView, UpdateView, DeleteView, TemplateView, DetailView
+from django_filters.views import FilterView
 
+from currency.filters import RateFilter, ContactUsFilter, SourceFilter
 from currency.forms import SourceForm, RateForm, ContactUsForm
 from currency.models import Rate, ContactUs, Source
-
 
 from currency.tasks import send_email_in_background
 
@@ -18,9 +18,18 @@ class IndexView(TemplateView):
     template_name = 'index.html'
 
 
-class RateListView(ListView):
+class RateListView(FilterView):
     queryset = Rate.objects.all().select_related('source')
     template_name = 'rate_list.html'
+    paginate_by = 25
+    filterset_class = RateFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['filter_params'] = '&'.join(
+            f'{key}={value}' for key, value in self.request.GET.items() if key != 'page'
+        )
+        return context
 
 
 class RateCreateView(CreateView):
@@ -54,9 +63,11 @@ class RateDetailsView(LoginRequiredMixin, DetailView):
     success_url = reverse_lazy('currency:rate-list')
 
 
-class ContactUsListView(ListView):
+class ContactUsListView(FilterView):
     queryset = ContactUs.objects.all()
     template_name = 'contactUs.html'
+    filterset_class = ContactUsFilter
+    paginate_by = 25
 
 
 class ContactUsCreateView(CreateView):
@@ -71,10 +82,10 @@ class ContactUsCreateView(CreateView):
 
         send_email_in_background.apply_async(
             kwargs={
-             "subject": subject,
-             "message": message,
-             "email_from": email_from
-             },
+                "subject": subject,
+                "message": message,
+                "email_from": email_from
+            },
             countdown=10,
         )
 
@@ -129,6 +140,8 @@ class SourceDetailsView(DetailView):
     success_url = reverse_lazy('currency:source-list')
 
 
-class SourceListView(ListView):
+class SourceListView(FilterView):
     queryset = Source.objects.all()
     template_name = 'source_list.html'
+    filterset_class = SourceFilter
+    paginate_by = 25

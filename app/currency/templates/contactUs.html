@@ -1,32 +1,40 @@
 {% extends "base.html" %}
 {% block title %}ContactUs{% endblock title %}
 {% block content %}
+    <div class="row">
+        {% include 'includes/filter.html' %}
+    </div>
     <h1>Contact Us List</h1>
     <table border="1">
         <thead>
-            <tr>
-                <th>Contact ID</th>
-                <th>Email From</th>
-                <th>Subject</th>
-                <th>Message</th>
-                <th>Action</th>
-            </tr>
+        <tr>
+            <th>Contact ID</th>
+            <th>Email From</th>
+            <th>Subject</th>
+            <th>Message</th>
+            <th>Action</th>
+        </tr>
         </thead>
         <tbody>
-            {% for contact in object_list %}
-                <tr>
-                    <td>{{ contact.contact_id }}</td>
-                    <td>{{ contact.email_from }}</td>
-                    <td>{{ contact.subject }}</td>
-                    <td>{{ contact.message }}</td>
+        {% for contact in object_list %}
+            <tr>
+                <td>{{ contact.contact_id }}</td>
+                <td>{{ contact.email_from }}</td>
+                <td>{{ contact.subject }}</td>
+                <td>{{ contact.message }}</td>
 
-                    <td>
-                        <a href="{% url 'currency:contactus-update' contact.contact_id %}">Edit</a>
-                        <a href="{% url 'currency:contactus-delete' contact.contact_id %}">Delete</a>
-                        <a href="{% url 'currency:contactus-details' contact.contact_id %}">Detail</a>
+                <td>
+                    <a href="{% url 'currency:contactus-update' contact.contact_id %}">Edit</a>
+                    <a href="{% url 'currency:contactus-delete' contact.contact_id %}">Delete</a>
+                    <a href="{% url 'currency:contactus-details' contact.contact_id %}">Detail</a>
 
-                </tr>
-            {% endfor %}
+            </tr>
+        {% endfor %}
         </tbody>
     </table>
+    <div class="row">
+        <div class="col-12">
+            {% include 'includes/pagination.html' %}
+        </div>
+    </div>
 {% endblock %}
