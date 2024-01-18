@@ -1,0 +1,6 @@
+PRIVATBANK_CODE_NAME = 'privat'
+MONOBANK_CODE_NAME = 'mono'
+OBMEN_DP_UA_CODE_NAME = 'obmenik_1'
+
+
+UAH_CODE = 980

@@ -4,6 +4,7 @@ from django.db import models
 from django.utils.translation import gettext_lazy as _
 from django.contrib.auth.models import AbstractUser
 from django.templatetags.static import static
+from account.managers import UserManager
 
 
 def user_directory_path(instance, filename):
@@ -16,6 +17,8 @@ class User(AbstractUser):
 
     USERNAME_FIELD = 'email'
     REQUIRED_FIELDS = []
+
+    objects = UserManager()
 
     class Meta:
         verbose_name = _('User')

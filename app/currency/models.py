@@ -36,6 +36,7 @@ class ContactUs(models.Model):
 
 
 class Source(models.Model):
+    code_name = models.CharField(_('Code name'), max_length=64, unique=True)
     source_url = models.CharField(_('Source URL'), max_length=255, blank=False)
     source_name = models.CharField(_('Source name'), max_length=64, blank=False)
     logo = models.FileField(_('Logo'), default=None, null=True, blank=True, upload_to=source_directory_path)
