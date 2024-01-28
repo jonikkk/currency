@@ -48,6 +48,7 @@ DJANGO_APPS = [
 EXTERNAL_APPS = [
     'django_extensions',
     'crispy_forms',
+    'django_filters'
 ]
 
 INTERNAL_APPS = [

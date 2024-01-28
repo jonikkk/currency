@@ -1,13 +1,19 @@
 {% extends "base.html" %}
 {% block title %}Rate list{% endblock title %}
 {% block content %}
+   <div class="row">
+
+            {% include 'includes/filter.html' %}
+
+    </div>
+
     <h1>Rates</h1>
     <a class="btn btn-primary" href="{% url 'currency:rate-create' %}" role="button">Create rate</a>
     <br>
     <br>
     <div class="row">
-    <table class="table table-striped">
-        <thead>
+        <table class="table table-striped">
+            <thead>
             <tr>
                 <th>Buy</th>
                 <th>Sell</th>
@@ -17,9 +23,9 @@
                 <th>Actions</th>
 
             </tr>
-        </thead>
-        <tbody>
-            {% for rate in object_list %}
+            </thead>
+            <tbody>
+            {% for rate in page_obj %}
                 <tr>
                     <td>{{ rate.buy }}</td>
                     <td>{{ rate.sell }}</td>
@@ -29,34 +35,41 @@
                     <td>
                         {% if request.user.is_superuser %}
                             <div class="dropdown">
-                              <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                 data-toggle="dropdown" aria-expanded="false">
+                            <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                               data-toggle="dropdown" aria-expanded="false">
                                 Actions
-                              </a>
-                              <div class="dropdown-menu">
+                            </a>
+                            <div class="dropdown-menu">
                                 <a class="dropdown-item" href="{% url 'currency:rate-update' rate.id %}">Edit</a>
                                 <a class="dropdown-item" href="{% url 'currency:rate-delete' rate.id %}">Delete</a>
                                 <a class="dropdown-item" href="{% url 'currency:rate-details' rate.id %}">Details</a>
 
-                              </div>
-                       {% elif request.user.is_authenticated %}
+                            </div>
+                        {% elif request.user.is_authenticated %}
                             <div class="dropdown">
-                              <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
-                                 data-toggle="dropdown" aria-expanded="false">
-                                Actions
+                                <a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+                                   data-toggle="dropdown" aria-expanded="false">
+                                    Actions
                                 </a>
                                 <div class="dropdown-menu">
-                                <a class="dropdown-item" href="{% url 'currency:rate-details' rate.id %}">Details</a>
+                                    <a class="dropdown-item"
+                                       href="{% url 'currency:rate-details' rate.id %}">Details</a>
                                 </div>
                             </div>
 
                         {% endif %}
-                            </div>
+                        </div>
                     </td>
 
                 </tr>
             {% endfor %}
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            {% include 'includes/pagination.html' %}
+        </div>
     </div>
 {% endblock %}
