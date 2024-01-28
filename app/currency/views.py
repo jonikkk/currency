@@ -19,7 +19,7 @@ class IndexView(TemplateView):
 
 
 class RateListView(FilterView):
-    queryset = Rate.objects.all().select_related('source')
+    queryset = Rate.objects.all().select_related('source').order_by('-created')
     template_name = 'rate_list.html'
     paginate_by = 25
     filterset_class = RateFilter
