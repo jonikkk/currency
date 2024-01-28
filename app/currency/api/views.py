@@ -48,4 +48,3 @@ class SourceView(ReadOnlyModelViewSet):
     )
     ordering_fields = ('source_name',)
     search_fields = ('source_name',)
-
