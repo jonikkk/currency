@@ -1,0 +1,42 @@
+[
+  {
+    "model": "currency.source",
+    "pk": 13,
+    "fields": {
+      "code_name": "mono",
+      "source_url": "https://api.monobank.ua/bank/currency",
+      "source_name": "MonoBank",
+      "logo": ""
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 14,
+    "fields": {
+      "code_name": "privat",
+      "source_url": "https://api.privatbank.ua/p24api/pubinfo?exchange&coursid=5",
+      "source_name": "PrivatBank",
+      "logo": ""
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 15,
+    "fields": {
+      "code_name": "obmenik_1",
+      "source_url": "https://obmen.dp.ua/",
+      "source_name": "Obmen.dp.ua",
+      "logo": ""
+    }
+  },
+  {
+    "model": "currency.source",
+    "pk": 16,
+    "fields": {
+      "code_name": "dummy",
+      "source_url": "https://dummy.com",
+      "source_name": "dummy",
+      "logo": ""
+    }
+  }
+]
