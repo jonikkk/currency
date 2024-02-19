@@ -6,6 +6,9 @@ Django==4.2.7
 django-crispy-forms==1.14.0
 django-extensions
 django-filter
+djangorestframework
+djangorestframework-simplejwt
+drf-yasg
 
 flake8==6.1.0
 flake8-builtins==2.2.0
