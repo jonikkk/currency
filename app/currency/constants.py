@@ -6,4 +6,3 @@ OBMEN_DP_UA_CODE_NAME = 'obmenik_1'
 UAH_CODE = 980
 
 LATEST_RATES_CACHE_KEY = 'latest_rates'
-

@@ -12,7 +12,6 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 from datetime import timedelta
 from pathlib import Path
 
-
 import environ
 from celery.schedules import crontab
 from django.urls import reverse_lazy
@@ -27,7 +26,6 @@ env = environ.Env(
     DEBUG=(bool, False)
 )
 env.read_env(BASE_DIR.parent / '.env')
-
 
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = env.str('SECRET_KEY')
@@ -219,7 +217,6 @@ EMAIL_HOST_USER = 'hileltest1234@gmail.com'
 # EMAIL_USE_SSL = False
 
 
-
 LOGIN_REDIRECT_URL = reverse_lazy('index')
 LOGIN_URL = reverse_lazy('login')
 LOGOUT_REDIRECT_URL = reverse_lazy('index')
@@ -256,7 +253,6 @@ CELERY_BEAT_SCHEDULE = {
 
 MEMCACHED_HOST = env.str('MEMCACHED_HOST', 'localhost')
 MEMCACHED_PORT = env.str('MEMCACHED_PORT', '11211')
-
 
 CACHES = {
     "default": {
