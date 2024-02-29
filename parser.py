@@ -4,8 +4,6 @@ import re
 import sqlite3
 from time import sleep
 
-
-
 import requests
 from bs4 import BeautifulSoup
 
@@ -36,7 +34,7 @@ def get_page_content(page: int, page_size: int = 100):
 
 def get_detail_content(link: str):
     link = base_url + link
-    print(link)
+    # print(link)
     response = requests.get(link)
     response.raise_for_status()
     return response
@@ -56,9 +54,9 @@ class CSVWriter:
             writer.writerow(data)
 
 
-class StdoutWriter:
-    def write_data(self, data):
-        print(data)
+# class StdoutWriter:
+#     def write_data(self, data):
+#         print(data)
 
 
 class DBWriter:
@@ -76,8 +74,7 @@ class DBWriter:
                 car_model_name TEXT,
                 car_year INTEGER,
                 car_link_to_view TEXT,
-                car_vin TEXT 
-            )
+                car_vin TEXT )
         ''')
         self.conn.commit()
 
@@ -88,7 +85,7 @@ class DBWriter:
                 VALUES (?, ?, ?, ?, ?, ?)
             ''', data)
             self.conn.commit()
-        except sqlite3.Error as e:
+        except sqlite3.Error:
             self.conn.rollback()
 
 
@@ -104,7 +101,7 @@ def main():
 
     while True:
         random_sleep()
-        print(f"Processing page {page}!")
+        print(f"Processing page {page}!") # noqa
 
         page_content = get_page_content(page)
 
@@ -113,7 +110,7 @@ def main():
         ticket_items = search_results.find_all("section", class_="ticket-item")
 
         if not ticket_items:
-            print(f"No more items on page {page}!")
+            print(f"No more items on page {page}!") # noqa
             break
 
         pattern = r'vehicleIdentificationNumber":"([^"]*)"'
@@ -131,7 +128,7 @@ def main():
             if match := re.search(pattern, context):
                 car_vin = match[1]
             else:
-                print("Value not found.")
+                print("Value not found.") # noqa
 
             data = [car_id, car_mark_details, car_model_name, car_year, car_link_to_view, car_vin]
 
