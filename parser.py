@@ -1,19 +1,22 @@
 import csv
 import random
 import re
+import sqlite3
 from time import sleep
+
+
 
 import requests
 from bs4 import BeautifulSoup
 
 base_url = 'https://auto.ria.com'
 
+
 def random_sleep():
     sleep(random.randint(2, 5))
 
 
 def get_page_content(page: int, page_size: int = 100):
-
     query_params = {
         'indexName': 'auto,order_auto,newauto_search',
         'categories.main.id': '1',
@@ -58,12 +61,44 @@ class StdoutWriter:
         print(data)
 
 
+class DBWriter:
+    def __init__(self, db_name='auto_ria.db'):
+        self.conn = sqlite3.connect(db_name)
+        self.cursor = self.conn.cursor()
+        self.create_table()
+
+    def create_table(self):
+        self.cursor.execute('''
+            CREATE TABLE IF NOT EXISTS cars (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                car_id INTEGER NOT NULL,
+                car_mark_details TEXT,
+                car_model_name TEXT,
+                car_year INTEGER,
+                car_link_to_view TEXT,
+                car_vin TEXT 
+            )
+        ''')
+        self.conn.commit()
+
+    def write_data(self, data):
+        try:
+            self.cursor.execute('''
+                INSERT INTO cars (car_id, car_mark_details, car_model_name, car_year, car_link_to_view, car_vin)
+                VALUES (?, ?, ?, ?, ?, ?)
+            ''', data)
+            self.conn.commit()
+        except sqlite3.Error as e:
+            self.conn.rollback()
+
+
 def main():
     page = 0
     headers = ['id', 'mark', 'model', 'year', 'link', 'vin']
 
     writers = (
         CSVWriter('cars1.csv', headers),
+        DBWriter(),
         # StdoutWriter(),
     )
 
@@ -81,23 +116,20 @@ def main():
             print(f"No more items on page {page}!")
             break
 
+        pattern = r'vehicleIdentificationNumber":"([^"]*)"'
+
         for ticket_item in ticket_items:
             car_details = ticket_item.find("div", class_="hide")
             car_id = car_details['data-id']
             car_mark_details = car_details['data-mark-name']
             car_model_name = car_details['data-model-name']
             car_year = car_details['data-year']
-
             car_link_to_view = car_details['data-link-to-view']
             detail_content = get_detail_content(car_link_to_view)
             detail_soup = BeautifulSoup(detail_content.content, 'html.parser')
             context = detail_soup.find('script', id="ldJson2").text
-            pattern = r'vehicleIdentificationNumber":"([^"]*)"'
-
-            match = re.search(pattern, context)
-            if match:
-                car_vin = match.group(1)
-                # print(car_vin)
+            if match := re.search(pattern, context):
+                car_vin = match[1]
             else:
                 print("Value not found.")
 
